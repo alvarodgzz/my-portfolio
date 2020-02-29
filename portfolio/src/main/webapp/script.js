@@ -27,62 +27,17 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-/** Adds a random fact to the DOM. */
-function addfactToDom(fact) {
-  console.log('Adding fact to dom: ' + fact);
-
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
+function goToData() {
+    const responsePromise = fetch('/data');
+    responsePromise.then(handleResponse);
 }
 
-
-//////////////////////////
-function getRandomfact() {
-  console.log('Fetching a random fact.');
-
-  // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/random-fact');
-
-  // When the request is complete, pass the response into handleResponse().
-  responsePromise.then(handleResponse);
-}
-
-/**
- * Handles response by converting it to text and passing the result to
- * addfactToDom().
- */
 function handleResponse(response) {
-  console.log('Handling the response.');
-
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise = response.text();
-
-  // When the response is converted to text, pass the result into the
-  // addfactToDom() function.
-  textPromise.then(addfactToDom);
+    const textPromise = response.text();
+    textPromise.then(addDataDOM);
 }
 
-
-/**
- * The above code is organized to show each individual step, but we can use an
- * ES6 feature called arrow functions to shorten the code. This function
- * combines all of the above code into a single Promise chain. You can use
- * whichever syntax makes the most sense to you.
- */
-function getRandomfactUsingArrowFunctions() {
-  fetch('/random-fact').then(response => response.text()).then((fact) => {
-    document.getElementById('fact-container').innerText = fact;
-  });
-}
-
-/**
- * Another way to use fetch is by using the async and await keywords. This
- * allows you to use the return values directly instead of going through
- * Promises.
- */
-async function getRandomfactUsingAsyncAwait() {
-  const response = await fetch('/random-fact');
-  const fact = await response.text();
-  document.getElementById('fact-container').innerText = fact;
+function addDataDOM(text) {
+    const dataContainer = document.getElementById('data-container');
+    dataContainer.innerText = text;
 }
