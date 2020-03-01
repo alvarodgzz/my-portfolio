@@ -23,10 +23,44 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    
+
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    /// Create my arrayList
+
+    String[] facts = {"I'm 6.2 ft  tall", "My favorite soccer team is TIGRES from UANL", 
+    "I play the bass in a band called Los Insurgentes", "I have a pug called Thor and a schnauzer called Rocco"};
+
+    /// convert to JSON
+    String json = convertToJson(facts);
     response.setContentType("text/html;");
     response.getWriter().println("<h1>Hello Alvaro!</h1>");
+
+    // Send the JSON as the response
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
   }
+
+        /**
+   * Converts a facts instance into a JSON string using manual String concatentation.
+   */
+  private String convertToJson(String[] facts) {
+    String json = "{";
+    json += "\"fact1\": ";
+    json += "\"" + facts[0] + "\"";
+    json += ", ";
+    json += "\"fact2\": ";
+    json += "\"" + facts[1] + "\"";
+    json += ", ";
+    json += "\"fact3\": ";
+    json += "\"" + facts[2] + "\"";
+    json += ", ";
+    json += "\"fact4\": ";
+    json += "\"" + facts[3] + "\"";
+    json += "}";
+    return json;
+  }
+
 }
