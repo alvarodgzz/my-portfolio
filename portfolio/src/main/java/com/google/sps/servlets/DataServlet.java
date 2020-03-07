@@ -13,12 +13,14 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
+//package arraylist;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -30,13 +32,16 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     /// Create my arrayList
 
-    String[] facts = {"I'm 6.2 ft  tall", "My favorite soccer team is TIGRES from UANL", 
-    "I play the bass in a band called Los Insurgentes", "I have a pug called Thor and a schnauzer called Rocco"};
+    ArrayList<String> facts = new ArrayList<String>();
+    facts.add("I'm 6.2 ft  tall");
+    facts.add("TIGRES");
+    facts.add("I play the bass in a band called Los Insurgentes");
+    facts.add("I'm 21 years old");
 
     /// convert to JSON
     String json = convertToJson(facts);
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Alvaro!</h1>");
+    //response.setContentType("text/html;");
+    //response.getWriter().println("<h1>Hello Alvaro!</h1>");
 
     // Send the JSON as the response
     response.setContentType("application/json;");
@@ -46,19 +51,19 @@ public class DataServlet extends HttpServlet {
         /**
    * Converts a facts instance into a JSON string using manual String concatentation.
    */
-  private String convertToJson(String[] facts) {
+  private String convertToJson(ArrayList<String> facts) {
     String json = "{";
     json += "\"fact1\": ";
-    json += "\"" + facts[0] + "\"";
+    json += "\"" + facts.get(0) + "\"";
     json += ", ";
     json += "\"fact2\": ";
-    json += "\"" + facts[1] + "\"";
+    json += "\"" + facts.get(1) + "\"";
     json += ", ";
     json += "\"fact3\": ";
-    json += "\"" + facts[2] + "\"";
+    json += "\"" + facts.get(2) + "\"";
     json += ", ";
     json += "\"fact4\": ";
-    json += "\"" + facts[3] + "\"";
+    json += "\"" + facts.get(3) + "\"";
     json += "}";
     return json;
   }
