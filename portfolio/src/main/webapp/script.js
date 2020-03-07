@@ -26,3 +26,49 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+//// Facts
+
+/**
+ * Fetches facts from the servers and adds them to the DOM.
+ */
+function getFacts() {
+  fetch('/data').then(response => response.json()).then((fact) => {
+    // fact is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+    const factsListElement = document.getElementById('server-facts-container');
+    factsListElement.innerHTML = '';
+    factsListElement.appendChild(
+        createListElement('Fact 1 : ' + fact.fact1));
+    factsListElement.appendChild(
+        createListElement('Fact 2 : ' + fact.fact2));
+    factsListElement.appendChild(
+        createListElement('Fact 3 : ' + fact.fact3));
+    factsListElement.appendChild(
+        createListElement('Fact 4 : ' + fact.fact4));
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+
+///// Hi Alvaro
+function goToData() {
+    const responsePromise = fetch('/data');
+    responsePromise.then(handleResponse);
+}
+
+function handleResponse(response) {
+    const textPromise = response.text();
+    textPromise.then(addDataDOM);
+}
+
+function addDataDOM(text) {
+    const dataContainer = document.getElementById('data-container');
+    dataContainer.innerText = text;
+}
